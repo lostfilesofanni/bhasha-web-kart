@@ -36,12 +36,12 @@ const UAInfo = () => {
           <p>
             Learn more about UA at{" "}
             <a
-              href="https://uasg.org/"
+              href="https://uasg.tech/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary font-medium underline"
             >
-              UASG.org
+              UASG.tech
             </a>
           </p>
           

@@ -158,7 +158,7 @@ const Index = () => {
         <footer className="mt-16 text-center text-sm text-muted-foreground">
           <p>Created with ❤️ to support Universal Acceptance and multilingual internet</p>
           <p className="mt-1">
-            <a href="https://uasg.org" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
+            <a href="https://uasg.tech/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
               Learn more about Universal Acceptance
             </a>
           </p>
