@@ -6,6 +6,8 @@ import BusinessForm from "@/components/BusinessForm";
 import DomainPreview from "@/components/DomainPreview";
 import LandingPagePreview from "@/components/LandingPagePreview";
 import UAInfo from "@/components/UAInfo";
+import VerificationFlow from "@/components/VerificationFlow";
+import FraudPrevention from "@/components/FraudPrevention";
 
 const Index = () => {
   const [businessName, setBusinessName] = useState("");
@@ -13,12 +15,28 @@ const Index = () => {
   const [whatsappNumber, setWhatsappNumber] = useState("");
   const [location, setLocation] = useState("");
   const [activeTab, setActiveTab] = useState("create");
+  const [verificationStatus, setVerificationStatus] = useState({
+    phoneVerified: false,
+    businessVerified: false,
+    photoUploaded: false
+  });
+  const [lastUpdated, setLastUpdated] = useState("");
 
   const handleBusinessSubmit = (name: string, lang: string, contact: string, loc: string) => {
     setBusinessName(name);
     setLanguage(lang);
     setWhatsappNumber(contact);
     setLocation(loc);
+    setActiveTab("verify");
+  };
+
+  const handleVerificationComplete = () => {
+    setVerificationStatus({
+      phoneVerified: true,
+      businessVerified: true,
+      photoUploaded: true
+    });
+    setLastUpdated(new Date().toLocaleString());
     setActiveTab("preview");
   };
 
@@ -33,15 +51,16 @@ const Index = () => {
             </h1>
           </div>
           <p className="text-xl text-foreground/80 max-w-2xl mx-auto">
-            Create beautiful landing pages with domains in your own language - हिन्दी, தமிழ், తెలుగు, and more!
+            Create verified landing pages with domains in your own language - हिन्दी, தமிழ், తెలుగు, and more!
           </p>
         </div>
 
         {/* Main content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid grid-cols-2 w-full max-w-md mx-auto">
+          <TabsList className="grid grid-cols-3 w-full max-w-md mx-auto">
             <TabsTrigger value="create">Create</TabsTrigger>
-            <TabsTrigger value="preview" disabled={!businessName}>Preview</TabsTrigger>
+            <TabsTrigger value="verify" disabled={!businessName}>Verify</TabsTrigger>
+            <TabsTrigger value="preview" disabled={!verificationStatus.phoneVerified}>Preview</TabsTrigger>
           </TabsList>
 
           <TabsContent value="create">
@@ -68,13 +87,35 @@ const Index = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="preview">
+          <TabsContent value="verify">
             {businessName && (
+              <div className="grid md:grid-cols-2 gap-6">
+                <VerificationFlow 
+                  businessName={businessName}
+                  phoneNumber={whatsappNumber}
+                  onVerificationComplete={handleVerificationComplete}
+                />
+                
+                <div className="space-y-6">
+                  <DomainPreview 
+                    businessName={businessName} 
+                    language={language} 
+                  />
+                  <UAInfo />
+                </div>
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="preview">
+            {businessName && verificationStatus.phoneVerified && (
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <DomainPreview 
                     businessName={businessName} 
                     language={language} 
+                    verified={true}
+                    lastUpdated={lastUpdated}
                   />
                   
                   <div className="mt-6">
@@ -88,12 +129,15 @@ const Index = () => {
                           <li>Upload your landing page to your hosting provider</li>
                           <li>Share your new multilingual web presence!</li>
                         </ol>
-                        <button 
-                          onClick={() => setActiveTab("create")} 
-                          className="mt-4 w-full bg-muted py-2 rounded-md hover:bg-muted/80 transition-colors"
-                        >
-                          Edit Your Details
-                        </button>
+                        <div className="flex gap-4 mt-4">
+                          <button 
+                            onClick={() => setActiveTab("create")} 
+                            className="flex-1 bg-muted py-2 rounded-md hover:bg-muted/80 transition-colors"
+                          >
+                            Edit Details
+                          </button>
+                          <FraudPrevention businessName={businessName} />
+                        </div>
                       </CardContent>
                     </Card>
                   </div>
@@ -103,6 +147,8 @@ const Index = () => {
                   businessName={businessName}
                   contact={whatsappNumber}
                   location={location}
+                  verified={true}
+                  lastUpdated={lastUpdated}
                 />
               </div>
             )}

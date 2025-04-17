@@ -1,11 +1,16 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Globe, ShieldCheck, Share2 } from "lucide-react";
 
 const UAInfo = () => {
   return (
     <Card className="border-accent/30">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg">Universal Acceptance (UA)</CardTitle>
+        <CardTitle className="text-lg flex items-center gap-2">
+          <Globe className="h-5 w-5 text-primary" />
+          Universal Acceptance (UA)
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-3 text-sm">
@@ -15,6 +20,19 @@ const UAInfo = () => {
           <p>
             When you create a website with a domain in Hindi, Tamil, or other languages, you're participating in making the internet more inclusive and accessible to everyone in their own language.
           </p>
+          
+          <div className="flex flex-wrap gap-2 my-2">
+            <Badge variant="outline" className="bg-primary/10 hover:bg-primary/20">
+              UA Compliance
+            </Badge>
+            <Badge variant="outline" className="bg-primary/10 hover:bg-primary/20">
+              IDN Support
+            </Badge>
+            <Badge variant="outline" className="bg-primary/10 hover:bg-primary/20">
+              Multilingual Web
+            </Badge>
+          </div>
+          
           <p>
             Learn more about UA at{" "}
             <a
@@ -26,10 +44,23 @@ const UAInfo = () => {
               UASG.org
             </a>
           </p>
-          <div className="text-xs p-2 bg-muted rounded-md mt-2">
-            <p>
-              <span className="font-semibold">UA Benefits:</span> Reach more customers in their preferred language, show cultural respect, and stand out from competitors.
-            </p>
+          
+          <div className="space-y-2 mt-2">
+            <div className="flex items-start gap-2 p-2 bg-muted rounded-md">
+              <ShieldCheck className="h-4 w-4 text-green-600 mt-0.5" />
+              <div className="text-xs">
+                <p className="font-semibold">UA Benefits:</p>
+                <p>Reach more customers in their preferred language, show cultural respect, and stand out from competitors.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-2 p-2 bg-muted rounded-md">
+              <Share2 className="h-4 w-4 text-blue-600 mt-0.5" />
+              <div className="text-xs">
+                <p className="font-semibold">Fraud Prevention:</p>
+                <p>Our verification process ensures only legitimate businesses can create UA-compliant landing pages.</p>
+              </div>
+            </div>
           </div>
         </div>
       </CardContent>
